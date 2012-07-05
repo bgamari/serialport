@@ -24,7 +24,7 @@ Library
   ghc-options:        -Wall
 
   if !os(windows)
-    Build-Depends:    unix
+    Build-Depends:    unix, unix-bytestring
     Other-Modules:    System.Hardware.Serialport.Posix
   else
     Build-Depends:    Win32

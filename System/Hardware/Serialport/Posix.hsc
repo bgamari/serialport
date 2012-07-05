@@ -1,10 +1,12 @@
-{-# LANGUAGE ForeignFunctionInterface #-}
+{-# LANGUAGE ForeignFunctionInterface, PackageImports #-}
 {-# OPTIONS_HADDOCK hide #-}
 module System.Hardware.Serialport.Posix where
 
+import Data.Char       
 import qualified Data.ByteString.Char8 as B
 import qualified Control.Exception as Ex
-import System.Posix.IO
+import "unix-bytestring" System.Posix.IO.ByteString (fdRead, fdWrite)
+import "unix" System.Posix.IO hiding (fdRead, fdWrite)
 import System.Posix.Types
 import System.Posix.Terminal
 import System.Hardware.Serialport.Types
@@ -25,9 +27,9 @@ openSerial dev settings = do
 -- |Receive bytes, given the maximum number
 recv :: SerialPort -> Int -> IO B.ByteString
 recv (SerialPort fd' _) n = do
-  result <- Ex.try $ fdRead fd' count :: IO (Either IOError (String, ByteCount))
+  result <- Ex.try $ fdRead fd' count :: IO (Either IOError B.ByteString)
   return $ case result of
-             Right (str, _) -> B.pack str
+             Right str      -> str
              Left _         -> B.empty
   where
     count = fromIntegral n
@@ -38,7 +40,7 @@ send :: SerialPort
         -> B.ByteString
         -> IO Int          -- ^ Number of bytes actually sent
 send (SerialPort fd' _ ) msg =
-  fromIntegral `fmap` fdWrite fd' (B.unpack msg)
+  fromIntegral `fmap` fdWrite fd' msg
 
 
 -- |Flush buffers
