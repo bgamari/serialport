@@ -57,7 +57,7 @@ commSpeedParser :: Parser CommSpeed
 commSpeedParser = option auto $ mconcat
   [ long "baudrate"
   , short 'b'
-  , value CS115200
+  , value CS9600
   , showDefault
   , metavar "<bps>"
   , help "Baud rate"

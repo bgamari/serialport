@@ -14,8 +14,6 @@ data CommSpeed
   | CS9600
   | CS19200
   | CS38400
-  | CS57600
-  | CS115200
   | CS Word32
   deriving (Show, Read, Eq)
 

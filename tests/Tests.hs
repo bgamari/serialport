@@ -16,8 +16,6 @@ configureComm h cs = do
         CS4800   -> "c"
         CS9600   -> "d"
         CS19200  -> "e"
-        CS57600  -> "f"
-        CS115200 -> "g"
         _        -> error "commSpeed not supported"
   send h $ B.pack control_char
   assertEqual "configure serial port" control_char . B.unpack =<< recv h 100
@@ -93,8 +91,6 @@ tests test_port control = TestList $ map (\(descr,fun) -> TestLabel descr (fun t
       ("b4800 Serialport",  testSerialport CS4800),
       ("b9600 Serialport",  testSerialport CS9600),
       ("b19200 Serialport", testSerialport CS19200),
-      ("b57600 Serialport", testSerialport CS57600),
-      ("b115200 Serialport",testSerialport CS115200),
       ("b9600 Handle",      testHandle CS9600)
       --("test delay",        testDelay)
       ]

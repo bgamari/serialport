@@ -208,6 +208,4 @@ commSpeedToBaudRate = \case
   CS9600   -> B9600
   CS19200  -> B19200
   CS38400  -> B38400
-  CS57600  -> B57600
-  CS115200 -> B115200
   CS b     -> fromIntegral b
